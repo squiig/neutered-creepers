@@ -1,0 +1,5 @@
+name: UNTITLED
+main: com.cerrealic.UNTITLED.TemplatePlugin
+version: 0.1.0-SNAPSHOT
+api-version: 1.15
+author: cerrealic
