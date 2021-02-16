@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="neutered-creepers:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/neutered_creepers_jar</output-path>
+    <root id="archive" name="neutered-creepers.jar" />
+  </artifact>
+</component>

@@ -1,5 +1,5 @@
-name: UNTITLED
-main: com.cerrealic.UNTITLED.TemplatePlugin
+name: NeuteredCreepers
+main: com.cerrealic.neuteredcreepers.NeuteredCreepers
 version: 0.1.0-SNAPSHOT
-api-version: 1.15
+api-version: 1.16
 author: cerrealic

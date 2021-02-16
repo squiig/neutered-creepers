@@ -7,20 +7,27 @@ version '0.1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+jar {
+	manifest {
+		attributes('Main-Class': 'com.cerrealic.coolcreepers.CoolCreepers')
+	}
+
+	from {
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
+
 repositories {
+	flatDir {
+		dirs 'C:/Users/Stan/Spigot/BuildTools/Spigot/Spigot-Server/target/'
+	}
+
 	jcenter()
 	mavenCentral()
 
 	// Spigot-API
 	maven {
 		url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-
-		// As of Gradle 5.1, you can limit this to only those
-		// dependencies you expect from it
-		content {
-			//includeGroup 'org.bukkit'
-			includeGroup 'org.spigotmc'
-		}
 	}
 
 	/*
@@ -36,39 +43,21 @@ repositories {
 		url = 'https://oss.sonatype.org/content/repositories/snapshots/'
 	}
 
-	// Vault, among others
-//	maven {
-//		url = 'https://jitpack.io'
-//	}
-
-	// Essentials
-//	maven {
-//		url = 'https://ci.ender.zone/plugin/repository/everything/'
-//	}
-
-	// Essentials
-//	maven {
-//		name = 'papermc'
-//		url = 'https://papermc.io/repo/repository/maven-public/'
-//	}
+	maven {
+		url = 'https://jitpack.io'
+	}
 }
 
 dependencies {
 	// Pick only one of these and read the comment in the repositories block.
-	compileOnly 'org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
-	//compileOnly 'org.bukkit:bukkit:1.14.4-R0.1-SNAPSHOT' // The Bukkit API with no shadowing.
-	//compileOnly 'org.spigotmc:spigot:1.14.4-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
-	//compileOnly 'org.bukkit:craftbukkit:1.14.4-R0.1-SNAPSHOT' // The full CraftBukkit server with no shadowing. Requires mavenLocal.
+	compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
+	compileOnly 'org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT' // The Bukkit API with no shadowing.
+	compileOnly 'org.spigotmc:spigot:1.16.5-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
+	compileOnly 'org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT'
+	annotationProcessor 'org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT'
+	compile 'com.github.squiig:cerspi-lib:3.3.3'
+}
 
-//	compileOnly('com.github.MilkBowl:VaultAPI') {
-//		version {
-//			require '1.7'
-//		}
-//	}
-
-//	compileOnly('net.ess3:EssentialsX') {
-//		version {
-//			require '2.17.0'
-//		}
-//	}
+configurations.compile {
+	resolutionStrategy.cacheChangingModulesFor 30, 'seconds'
 }
