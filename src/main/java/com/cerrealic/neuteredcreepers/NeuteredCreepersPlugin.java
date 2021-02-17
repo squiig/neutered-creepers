@@ -10,6 +10,7 @@ import net.minecraft.server.v1_16_R3.Entity;
 import net.minecraft.server.v1_16_R3.Explosion;
 import net.minecraft.server.v1_16_R3.World;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftCreeper;
+import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
 import org.bukkit.plugin.java.annotation.plugin.Description;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Plugin(name = "NeuteredCreepers", version = "0.1.0-SNAPSHOT")
-@Description("Neuters your creepers! All the damage without the griefing.")
+@Description("Neuters your creepers! All the damage, none of the griefing.")
 @Author(value = "cerrealic")
 public class NeuteredCreepersPlugin extends CerspiPlugin {
 	private Map<Integer, NeuteredCreeper> neuteredCreepers;
@@ -34,7 +35,7 @@ public class NeuteredCreepersPlugin extends CerspiPlugin {
 		super.onEnable();
 
 		Cerspi.registerListeners(this, new GeneralEventListener(this));
-		Cerspi.registerCommands(this, true, new CommandNeuteredCreepers(this));
+		Cerspi.registerCommands(this, false, new CommandNeuteredCreepers(this));
 		neuteredCreepers = new HashMap<>();
 	}
 
@@ -46,7 +47,7 @@ public class NeuteredCreepersPlugin extends CerspiPlugin {
 		return config;
 	}
 
-	public NeuteredCreepersConfig getCoolCreepersConfig() {
+	public NeuteredCreepersConfig getNeuteredCreepersConfig() {
 		return config;
 	}
 

@@ -55,7 +55,7 @@ public class CommandNeuteredCreepers extends CerspiCommand {
 			return false;
 		}
 
-		NeuteredCreepersConfig config = neuteredCreepersPlugin.getCoolCreepersConfig();
+		NeuteredCreepersConfig config = neuteredCreepersPlugin.getNeuteredCreepersConfig();
 
 		switch (args[0].toLowerCase()) {
 			case OPT_DEBUG:
