@@ -1,9 +1,9 @@
 #
-# Local .bashrc for EzBuy
+# Local .bashrc for NeuteredCreepers
 # author: cerrealic
 
 alias run='cd server && start start.bat && cd ..'
-alias bl='../spigot-dev-scripts/build.sh UNTITLED'
+alias bl='../spigot-dev-scripts/build.sh neutered-creepers'
 alias bll='bl && run'
 alias bp='bump'
 

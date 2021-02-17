@@ -1,63 +1,37 @@
 package com.cerrealic.neuteredcreepers;
 
 import com.cerrealic.neuteredcreepers.events.DebugToggleEvent;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftCreeper;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.ExplosionPrimeEvent;
-
-import java.util.Collection;
+import org.bukkit.event.entity.*;
 
 public class GeneralEventListener implements Listener {
-	private final NeuteredCreepersPlugin neuteredCreepersPluginInstance;
+	private final NeuteredCreepersPlugin plugin;
 
-	public GeneralEventListener(NeuteredCreepersPlugin neuteredCreepersPluginInstance) {
-		this.neuteredCreepersPluginInstance = neuteredCreepersPluginInstance;
+	public GeneralEventListener(NeuteredCreepersPlugin plugin) {
+		this.plugin = plugin;
 	}
 
 	@EventHandler
-	public void onCreatureSpawn(CreatureSpawnEvent event) {
-		if (!event.getEntityType().equals(EntityType.CREEPER)) {
+	public void onEntityExplode(EntityExplodeEvent event) {
+		if (!isExplodingEntity(event.getEntityType())) {
 			return;
 		}
 
-		// Make every creeper a neutered creeper
-		neuteredCreepersPluginInstance.registerCreeper(new NeuteredCreeper((CraftCreeper) event.getEntity()));
-	}
-
-	@EventHandler
-	public void onExplosionPrime(ExplosionPrimeEvent event) {
-		if (!event.getEntityType().equals(EntityType.CREEPER)) {
-			return;
-		}
-
-		if (neuteredCreepersPluginInstance.isNeuteredCreeper((CraftCreeper) event.getEntity())) {
-			event.setCancelled(true);
-			NeuteredCreeper neuteredCreeper = neuteredCreepersPluginInstance.getNeuteredCreeper(event.getEntity().getEntityId());
-			neuteredCreeper.explode();
-		}
-	}
-
-	@EventHandler
-	public void onEntityDeath(EntityDeathEvent event) {
-		if (!event.getEntityType().equals(EntityType.CREEPER)) {
-			return;
-		}
-
-		if (neuteredCreepersPluginInstance.isNeuteredCreeper((CraftCreeper) event.getEntity())) {
-			NeuteredCreeper neuteredCreeper = neuteredCreepersPluginInstance.getNeuteredCreeper(event.getEntity().getEntityId());
-			neuteredCreeper.onDeath();
-		}
+		event.blockList().clear();
 	}
 
 	@EventHandler
 	public void onDebugToggle(DebugToggleEvent event) {
-		Collection<NeuteredCreeper> neuteredCreepers = neuteredCreepersPluginInstance.getNeuteredCreepers().values();
-		for (NeuteredCreeper neuteredCreeper : neuteredCreepers) {
-			neuteredCreeper.getClientCreeper().setGlowing(event.isDebugEnabled());
-		}
+	}
+
+	private boolean isExplodingEntity(EntityType entityType) {
+		return entityType.equals(EntityType.CREEPER)
+				|| entityType.equals(EntityType.ENDER_CRYSTAL)
+				|| entityType.equals(EntityType.FIREBALL)
+				|| entityType.equals(EntityType.MINECART_TNT)
+				|| entityType.equals(EntityType.PRIMED_TNT)
+				|| entityType.equals(EntityType.WITHER_SKULL);
 	}
 }

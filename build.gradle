@@ -7,13 +7,15 @@ version '0.1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+project.configurations.implementation.setCanBeResolved(true)
+
 jar {
 	manifest {
-		attributes('Main-Class': 'com.cerrealic.coolcreepers.CoolCreepers')
+		attributes('Main-Class': 'com.cerrealic.neuteredcreepers.NeuteredCreepersPlugin')
 	}
 
 	from {
-		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+		configurations.implementation.collect { it.isDirectory() ? it : zipTree(it) }
 	}
 }
 
@@ -54,9 +56,9 @@ dependencies {
 	compileOnly 'org.spigotmc:spigot:1.16.4' // The full Spigot server with no shadowing. Requires mavenLocal.
 	compileOnly 'org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT'
 	annotationProcessor 'org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT'
-	compile 'com.github.squiig:cerspi-lib:3.3.5'
+	implementation 'com.github.squiig:cerspi-lib:3.3.5'
 }
 
-configurations.compile {
+configurations.implementation {
 	resolutionStrategy.cacheChangingModulesFor 30, 'seconds'
 }

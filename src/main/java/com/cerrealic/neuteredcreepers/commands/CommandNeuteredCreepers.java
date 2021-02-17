@@ -15,6 +15,7 @@ import org.bukkit.plugin.java.annotation.permission.Permission;
 import org.bukkit.plugin.java.annotation.permission.Permissions;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Commands(
@@ -35,12 +36,12 @@ import java.util.List;
 )
 public class CommandNeuteredCreepers extends CerspiCommand {
 	private static final String LABEL = "neuteredcreepers";
-	private final NeuteredCreepersPlugin neuteredCreepersPlugin;
+	private final NeuteredCreepersPlugin plugin;
 	private final Logger logger;
 	private static final String OPT_DEBUG = "debug";
 
 	public CommandNeuteredCreepers(NeuteredCreepersPlugin neuteredCreepersPluginInstance) {
-		this.neuteredCreepersPlugin = neuteredCreepersPluginInstance;
+		this.plugin = neuteredCreepersPluginInstance;
 		this.logger = neuteredCreepersPluginInstance.getCerspiLogger();
 	}
 
@@ -55,12 +56,12 @@ public class CommandNeuteredCreepers extends CerspiCommand {
 			return false;
 		}
 
-		NeuteredCreepersConfig config = neuteredCreepersPlugin.getNeuteredCreepersConfig();
+		NeuteredCreepersConfig config = plugin.getNeuteredCreepersConfig();
 
 		switch (args[0].toLowerCase()) {
 			case OPT_DEBUG:
-				neuteredCreepersPlugin.setDebugMode(!neuteredCreepersPlugin.getDebugger().isEnabled());
-				DebugToggleEvent debugToggleEvent = new DebugToggleEvent(neuteredCreepersPlugin.getDebugger().isEnabled());
+				plugin.setDebugMode(!plugin.getDebugger().isEnabled());
+				DebugToggleEvent debugToggleEvent = new DebugToggleEvent(plugin.getDebugger().isEnabled());
 				Bukkit.getPluginManager().callEvent(debugToggleEvent);
 				return true;
 		}
@@ -70,7 +71,7 @@ public class CommandNeuteredCreepers extends CerspiCommand {
 
 	@Override
 	public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String alias, String[] args) {
-		List<String> argNames = Arrays.asList(OPT_DEBUG);
+		List<String> argNames = Collections.singletonList(OPT_DEBUG);
 
 		if (args.length > 1) {
 			return null;
