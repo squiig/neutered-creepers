@@ -10,11 +10,9 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 
 import java.util.Collection;
-import java.util.Random;
 
 public class GeneralEventListener implements Listener {
-	private Random random = new Random();
-	private NeuteredCreepersPlugin neuteredCreepersPluginInstance;
+	private final NeuteredCreepersPlugin neuteredCreepersPluginInstance;
 
 	public GeneralEventListener(NeuteredCreepersPlugin neuteredCreepersPluginInstance) {
 		this.neuteredCreepersPluginInstance = neuteredCreepersPluginInstance;
@@ -59,7 +57,7 @@ public class GeneralEventListener implements Listener {
 	public void onDebugToggle(DebugToggleEvent event) {
 		Collection<NeuteredCreeper> neuteredCreepers = neuteredCreepersPluginInstance.getNeuteredCreepers().values();
 		for (NeuteredCreeper neuteredCreeper : neuteredCreepers) {
-			neuteredCreeper.getCreeper().setGlowing(event.isDebugEnabled());
+			neuteredCreeper.getClientCreeper().setGlowing(event.isDebugEnabled());
 		}
 	}
 }

@@ -1,91 +1,52 @@
 package com.cerrealic.neuteredcreepers;
 
 import net.minecraft.server.v1_16_R3.*;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftCreeper;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 public class NeuteredCreeper {
-	private final NeuteredCreepersPlugin neuteredCreepersPlugin;
-	private final EntityCreeper nmsCreeper;
-	private final CraftCreeper creeper;
-	private final double explosionRadius;
-	private final Random random;
+	private final NeuteredCreepersPlugin plugin;
+	private final EntityCreeper serverCreeper;
+	private final CraftCreeper clientCreeper;
 
 	public NeuteredCreeper(CraftCreeper targetCreeper) {
-		neuteredCreepersPlugin = NeuteredCreepersPlugin.getPlugin(NeuteredCreepersPlugin.class);
-		random = new Random();
-		nmsCreeper = targetCreeper.getHandle();
-		creeper = targetCreeper;
-		explosionRadius = targetCreeper.getExplosionRadius();
+		plugin = NeuteredCreepersPlugin.getPlugin(NeuteredCreepersPlugin.class);
+		serverCreeper = targetCreeper.getHandle();
+		clientCreeper = targetCreeper;
 
-		if (neuteredCreepersPlugin.getDebugger().isEnabled()) {
-			creeper.setGlowing(true);
+		if (plugin.getDebugger().isEnabled()) {
+			clientCreeper.setGlowing(true);
 		}
 	}
 
 	public void onDeath() {
-		neuteredCreepersPlugin.forgetCreeper(this);
+		plugin.forgetCreeper(this);
 	}
 
-	public CraftCreeper getCreeper() {
-		return creeper;
+	public EntityCreeper getServerCreeper() {
+		return serverCreeper;
 	}
 
-	public double getExplosionRadius() {
-		return explosionRadius;
+	public CraftCreeper getClientCreeper() {
+		return clientCreeper;
 	}
 
 	/**
 	 * Mostly copied from NMS creeper class.
 	 */
 	public void explode() {
-		if (!nmsCreeper.world.isClientSide) {
+		if (!serverCreeper.world.isClientSide) {
+			CraftWorld world = serverCreeper.world.getWorld();
+			world.setGameRuleValue(GameRules.MOB_GRIEFING.toString(), "false");
 
-			// this is the holy bit of course
-			Explosion.Effect effect = Explosion.Effect.NONE;
-
-			float f = nmsCreeper.isPowered() ? 2.0F : 1.0F;
-
-//			creeper.killed = true;
-
-			NeuteredCreepersPlugin.createNeuteredExplosion(nmsCreeper.getWorld(), nmsCreeper, nmsCreeper.locX(), nmsCreeper.locY(), nmsCreeper.locZ(), (float) explosionRadius * f, effect);
-
-			nmsCreeper.die();
+			serverCreeper.explode();
 
 			// calling the death event ourselves
-			EntityDeathEvent deathEvent = new EntityDeathEvent(creeper, null);
-			creeper.getServer().getPluginManager().callEvent(deathEvent);
-
-			createEffectCloud();
-		}
-	}
-
-	/**
-	 * Mostly copied from NMS creeper class.
-	 */
-	public void createEffectCloud() {
-		Collection<MobEffect> collection = nmsCreeper.getEffects();
-		if (!collection.isEmpty()) {
-			EntityAreaEffectCloud entityareaeffectcloud = new EntityAreaEffectCloud(nmsCreeper.world, nmsCreeper.locX(), nmsCreeper.locY(), nmsCreeper.locZ());
-			entityareaeffectcloud.setSource(nmsCreeper);
-			entityareaeffectcloud.setRadius(2.5F);
-			entityareaeffectcloud.setRadiusOnUse(-0.5F);
-			entityareaeffectcloud.setWaitTime(10);
-			entityareaeffectcloud.setDuration(entityareaeffectcloud.getDuration() / 2);
-			entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float) entityareaeffectcloud.getDuration());
-			Iterator iterator = collection.iterator();
-
-			while (iterator.hasNext()) {
-				MobEffect mobeffect = (MobEffect) iterator.next();
-				entityareaeffectcloud.addEffect(new MobEffect(mobeffect));
-			}
-
-			nmsCreeper.world.addEntity(entityareaeffectcloud, CreatureSpawnEvent.SpawnReason.EXPLOSION);
+			EntityDeathEvent deathEvent = new EntityDeathEvent(clientCreeper, new ArrayList<>()); // TODO: will this interfere with normal drops?
+			clientCreeper.getServer().getPluginManager().callEvent(deathEvent);
 		}
 	}
 }
