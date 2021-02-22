@@ -15,7 +15,7 @@ public class GeneralEventListener implements Listener {
 
 	@EventHandler
 	public void onEntityExplode(EntityExplodeEvent event) {
-		if (!isExplodingEntity(event.getEntityType())) {
+		if (!Util.isExplodingEntity(event.getEntityType())) {
 			return;
 		}
 
@@ -24,14 +24,5 @@ public class GeneralEventListener implements Listener {
 
 	@EventHandler
 	public void onDebugToggle(DebugToggleEvent event) {
-	}
-
-	private boolean isExplodingEntity(EntityType entityType) {
-		return entityType.equals(EntityType.CREEPER)
-				|| entityType.equals(EntityType.ENDER_CRYSTAL)
-				|| entityType.equals(EntityType.FIREBALL)
-				|| entityType.equals(EntityType.MINECART_TNT)
-				|| entityType.equals(EntityType.PRIMED_TNT)
-				|| entityType.equals(EntityType.WITHER_SKULL);
 	}
 }
