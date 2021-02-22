@@ -9,12 +9,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashSet;
 
 public class NeuteredCreepersConfig extends CerspiPluginConfig {
-	private final ConfigNode<Boolean> creeperGriefing = new ConfigNode<>("creeper-griefing", false);
-	private final ConfigNode<Boolean> crystalGriefing = new ConfigNode<>("crystal-griefing", true);
-	private final ConfigNode<Boolean> fireballGriefing = new ConfigNode<>("fireball-griefing", true);
-	private final ConfigNode<Boolean> tntMinecartGriefing = new ConfigNode<>("tnt-minecart-griefing", true);
-	private final ConfigNode<Boolean> tntGriefing = new ConfigNode<>("tnt-griefing", true);
-	private final ConfigNode<Boolean> witherGriefing = new ConfigNode<>("wither-griefing", true);
+	private ConfigNode<Boolean>
+			creeperGriefing,
+			crystalGriefing,
+			fireballGriefing,
+			tntMinecartGriefing,
+			tntGriefing,
+			witherGriefing;
 
 	public NeuteredCreepersConfig(JavaPlugin plugin, FileConfiguration fileConfiguration) {
 		super(plugin, fileConfiguration);
@@ -22,6 +23,12 @@ public class NeuteredCreepersConfig extends CerspiPluginConfig {
 
 	@Override
 	protected HashSet<ConfigNode> getDefinedNodes() {
+		creeperGriefing = new ConfigNode<>("creeper-griefing", false);
+		crystalGriefing = new ConfigNode<>("crystal-griefing", true);
+		fireballGriefing = new ConfigNode<>("fireball-griefing", true);
+		tntMinecartGriefing = new ConfigNode<>("tnt-minecart-griefing", true);
+		tntGriefing = new ConfigNode<>("tnt-griefing", true);
+		witherGriefing = new ConfigNode<>("wither-griefing", true);
 		return Sets.newHashSet(creeperGriefing, crystalGriefing, fireballGriefing, tntMinecartGriefing, tntGriefing, witherGriefing);
 	}
 
