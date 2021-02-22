@@ -59,6 +59,6 @@ dependencies {
 	implementation 'com.github.squiig:cerspi-lib:3.3.5'
 }
 
-configurations.implementation {
-	resolutionStrategy.cacheChangingModulesFor 30, 'seconds'
-}
+//configurations.implementation {
+//	resolutionStrategy.cacheChangingModulesFor 30, 'seconds'
+//}
