@@ -1,0 +1,9 @@
+# NeuteredCreepers config.yml
+debug: false
+check-for-updates: true
+creeper-griefing: false
+crystal-griefing: true
+fireball-griefing: true
+tnt-minecart-griefing: true
+tnt-griefing: true
+wither-griefing: true
