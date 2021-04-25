@@ -1,6 +1,6 @@
 main: com.cerrealic.neuteredcreepers.NeuteredCreepersPlugin
 name: NeuteredCreepers
 description: Neuters the explosive stuff! All the damage, none of the griefing.
-version: 1.0.0
+version: 1.0.1
 api-version: 1.16
 author: cerrealic
