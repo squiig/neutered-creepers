@@ -8,32 +8,11 @@ import com.cerrealic.neuteredcreepers.NeuteredCreepersPlugin;
 import com.cerrealic.neuteredcreepers.events.DebugToggleEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.PermissionDefault;
-import org.bukkit.plugin.java.annotation.command.Command;
-import org.bukkit.plugin.java.annotation.command.Commands;
-import org.bukkit.plugin.java.annotation.permission.Permission;
-import org.bukkit.plugin.java.annotation.permission.Permissions;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Commands(
-		@Command(
-				name = "neuteredcreepers",
-				desc = "General NeuteredCreepers command.",
-				usage = "/<command> debug",
-				aliases = "nc",
-				permission = "neuteredcreepers.command"
-		)
-)
-@Permissions(
-		@Permission(
-				name = "neuteredcreepers.command",
-				desc = "Allows use of the /neuteredcreepers command.",
-				defaultValue = PermissionDefault.OP
-		)
-)
 public class CommandNeuteredCreepers extends CerspiCommand {
 	private static final String LABEL = "neuteredcreepers";
 	private final NeuteredCreepersPlugin plugin;
