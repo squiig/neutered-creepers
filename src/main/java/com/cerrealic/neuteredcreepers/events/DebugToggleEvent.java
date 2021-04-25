@@ -5,7 +5,7 @@ import org.bukkit.event.HandlerList;
 
 public class DebugToggleEvent extends Event {
 	private static final HandlerList HANDLERS = new HandlerList();
-	private boolean isDebugEnabled;
+	private final boolean isDebugEnabled;
 
 	public DebugToggleEvent(boolean isDebugEnabled) {
 		this.isDebugEnabled = isDebugEnabled;
